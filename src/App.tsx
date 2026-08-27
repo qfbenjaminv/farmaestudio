@@ -103,8 +103,8 @@ function AccessPage() {
         <p className="eyebrow">Sesión de estudio</p>
         <h1 id="access-title">Acceso a FarmaEstudio</h1>
         <p>Ingresa con tu cuenta de Google para conservar tu avance entre sesiones.</p>
-        <Button type="button" variant="primary"><span className="google-mark" aria-hidden="true">G</span>Continuar con Google</Button>
-        <p className="small-print">El acceso estará disponible cuando conectes tu cuenta institucional o personal.</p>
+        <Button type="button" variant="primary" disabled aria-describedby="google-access-unavailable"><span className="google-mark" aria-hidden="true">G</span>Continuar con Google</Button>
+        <p id="google-access-unavailable" className="small-print">La conexión con Google aún no está disponible en esta versión.</p>
       </div>
     </section>
   )
@@ -122,6 +122,8 @@ function StudyPlaceholder({ title, code }: { title: string; code: string }) {
 }
 
 function StateGallery() {
+  const [isRetrying, setIsRetrying] = useState(false)
+
   return (
     <section className="content-page" aria-labelledby="states-title">
       <EditorialMargin code="EST" label="Estados" />
@@ -129,7 +131,9 @@ function StateGallery() {
       <h1 id="states-title">Referencia de interfaz</h1>
       <div className="state-grid">
         <LoadingState label="Cargando módulos" />
-        <ErrorState title="No fue posible cargar" actionLabel="Reintentar" onAction={() => undefined} />
+        {isRetrying
+          ? <LoadingState label="Recuperando módulos" />
+          : <ErrorState title="No fue posible cargar" actionLabel="Reintentar" onAction={() => setIsRetrying(true)} />}
       </div>
     </section>
   )
