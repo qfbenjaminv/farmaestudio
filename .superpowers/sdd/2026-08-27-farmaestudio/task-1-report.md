@@ -39,3 +39,21 @@ Implementation commit: `72fc5fe6324083e148ddf1cdce67c4387b7da5e2` (`feat: establ
 ## Concerns
 
 None. The Google Fonts import has CSS system-font fallbacks for unavailable network fonts; its external fetch is limited to visual enhancement.
+
+---
+
+## Fix round 1
+
+- `Button` now composes `asChild` by applying its button classes directly to the interactive child; the landing CTA is therefore a correctly sized, styled link rather than a link nested in a styled span.
+- The unavailable Google OAuth control is disabled and described by adjacent explanatory text, so it no longer appears actionable without an implementation.
+- The representative `Reintentar` action now transitions the error card to a visible, announced `Recuperando módulos` loading state.
+
+### Fix TDD and verification
+
+- **Red:** focused navigation test run produced the three expected failures: CTA link lacked `button button-primary`, Google access was enabled, and retry left the alert rendered.
+- **Green:** focused run passed **1 file / 5 tests**, including the three new behavioral assertions.
+- Final `npm test` passed **2 files / 8 tests**; `npm run lint`, `npm run build`, and `git diff --check` all passed.
+
+### Fix commit
+
+`556667f1fe692110d62d70d696b173f385bfb074` (`fix: make task 1 states actionable`).
